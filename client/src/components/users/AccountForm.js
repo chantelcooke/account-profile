@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { UserConsumer } from '../../providers/UserProvider';
+import { Form , Button } from 'react-bootstrap';
+import { GoldBtn } from '../../styles/profileStyles';
 
 const AccountForm = ({ id, username, memberlvl, updateUser, img }) => {
   const [user, setUser] = useState({ username: '', memberlvl: '', img: '' })
@@ -20,7 +22,7 @@ const AccountForm = ({ id, username, memberlvl, updateUser, img }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <label>Username:</label>
         <input 
           name="username"
@@ -51,7 +53,52 @@ const AccountForm = ({ id, username, memberlvl, updateUser, img }) => {
           }
         </select>
         <button type='submit'>Submit</button>
-      </form>
+      </form> */}
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicUsername">
+          <Form.Label>Username: </Form.Label>
+          <Form.Control 
+            type='text'
+            name="username"
+            value={user.username}
+            onChange={(e) => setUser({ ...user, username: e.target.value })}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicImg">
+          <Form.Label>Profile Image</Form.Label>
+          <Form.Control 
+            type='text'
+            name="img"
+            value={user.img}
+            onChange={(e) => setUser({ ...user, img: e.target.value })}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicLvl">
+          <Form.Select 
+            name="memberlvl"
+            onChange={(e) => setUser({ ...user, memberlvl: e.target.value}) }
+          >
+            {
+              memberOpts.map( m => 
+                <option
+                  value={m.value}
+                >
+                  {m.text}
+                </option>
+              )
+            }
+          </Form.Select>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+        <GoldBtn type="submit">
+          Submit
+        </GoldBtn>
+      </Form>
     </>
   )
 }
